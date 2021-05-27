@@ -18,18 +18,30 @@ export default function Deposits() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
+      <Title>Total Estimated Value</Title>
       <Typography component="p" variant="h4">
-        $3,024.00
+        $10,000.00
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
+      <Typography component="h2" variant="h7" color="secondary" >
+        Number of Dogecoins
+      </Typography>
+      <Typography component="p" variant="h5">
+        10727.18633361
+      </Typography>
+      <Typography component="h2" variant="h7" color="secondary" >
+        USDT Avalible
+      </Typography>
+      <Typography component="p" variant="h5">
+        10727.18633361
+      </Typography>
+      {/* <Typography color="textSecondary" className={classes.depositContext}>
         on 15 March, 2019
-      </Typography>
-      <div>
+      </Typography> */}
+      {/* <div>
         <Link color="primary" href="#" onClick={preventDefault}>
           View balance
         </Link>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }

@@ -9,16 +9,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
 // Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+function createData(id, time, price, amount, total) {
+  return { id, time, price, amount, total };
 }
 
 const rows = [
-  createData(0, '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-  createData(1, '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(3, '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-  createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
+  createData(0, '2021-05-26 22:19:35', 0.383000, 1000, 383),
+  createData(1, '2021-05-21 18:19:20', 0.402000, 1000, 402),
+  createData(2, '2021-05-20 16:18:59', 0.388000, 1000, 388),
+  createData(3, '2021-05-18 09:06:09', 0.561000, 1000, 561),
+  createData(4, '2021-05-16 10:06:09', 0.621000, 1000, 621),
 ];
 
 function preventDefault(event) {
@@ -39,21 +39,19 @@ export default function Orders() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Time</TableCell>
+            <TableCell>Price (USDT)</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell align="right">Total (USDT)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+              <TableCell>{row.time}</TableCell>
+              <TableCell>{row.price}</TableCell>
+              <TableCell>{row.amount}</TableCell>
+              <TableCell align="right">{row.total}</TableCell>
             </TableRow>
           ))}
         </TableBody>
