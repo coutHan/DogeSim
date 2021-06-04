@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import { widget } from 'lightweight-charts';
 // Generate Sales Data
 function createData(time, amount) {
   return { time, amount };
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: 200,
+    },
+  },
+}));
 
 const data = [
   createData('00:00', 0),
@@ -54,8 +67,11 @@ var tradeview = `
 
 var thisIsMyCopy = '<p>copy copy copy <strong>strong copy</strong></p>';
 
-export default function Chart() {
+export default function Chart({doge, setDoge, USTD, setUSTD,currentPrice, setCurrentPrice}) {
+  const [buyDoge, setbuyDoge] = useState(0)
+  const [sellDoge, setsellDoge] = useState(0)
   const theme = useTheme();
+  const classes = useStyles();
 
   const defaultProps = {
 		symbol: [
@@ -75,38 +91,76 @@ export default function Chart() {
 		studiesOverrides: {},
 	};
 
+  const handleBuyInput = ({text}) =>{
+    // setbuyDoge()
+    console.log("Buy", text.target.value)
+    setbuyDoge(text.target.value)
+  }
+
+  const handleSellInput = ({text}) =>{
+    // setbuyDoge()
+    console.log("Buy", text.target.value)
+    setsellDoge(text.target.value)
+  }
+
+  const handleBuy = () =>{
+    console.log(buyDoge)
+    console.log("Buy")
+    const newDoge = parseInt(doge)+parseInt(buyDoge)
+    // console.log(newDoge, typeof(doge), typeof(buyDoge))
+    setDoge(newDoge)
+    const newUSTD = USTD-buyDoge*currentPrice
+    setUSTD(newUSTD)
+  }
+
+  const handleSell = () =>{
+    console.log(sellDoge)
+    console.log("Buy")
+    const newDoge = parseInt(doge)-parseInt(sellDoge)
+    // console.log(newDoge, typeof(doge), typeof(buyDoge))
+    setDoge(newDoge)
+    const newUSTD = USTD+buyDoge*currentPrice
+    setUSTD(newUSTD)
+  }
+
   return (
     <React.Fragment>
       <Title>DOGE/USDT</Title>
-      {/* <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
-        >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              position="left"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-            >
-              Price ($)
-            </Label>
-          </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
-        </LineChart>
-
-      </ResponsiveContainer> */}
-       {/* <div className="test" dangerouslySetInnerHTML={{__html: tradeview}}></div>  */}
-
-       <Typography component="p" variant="h4">
-        Trade Dogecoin here
-      </Typography>
+      
+      <form className={classes.root} noValidate autoComplete="off">
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+        <TextField id="buy" label={"You have "+USTD+" USDT"} placeholder="Quantity of Dogecoins to buy"  onChange={text => handleBuyInput({text})}/>
+        </Grid>
+        <Grid item xs={6}>
+        <TextField id="sell" label={"You have "+doge+" Dogecoins"} placeholder="Quantity of Dogecoins to sell" onChange={text => handleSellInput({text})}/>
+        </Grid>
+        <Grid item xs={3}>
+        <Button
+            
+            fullWidth
+            variant="contained"
+            color="secondary"
+            onClick={handleBuy}
+          >
+            Buy Dogecoin
+        </Button>
+        </Grid>
+        <Grid item xs={3}>
+          </Grid>
+        <Grid item xs={3}>
+        <Button
+            fullWidth
+            variant="contained"
+            color="secondary"
+            onClick={handleSell}
+          >
+            Sell Dogecoin
+        </Button>
+        </Grid>
+      </Grid>
+    </form>
+      
     </React.Fragment>
   );
 }

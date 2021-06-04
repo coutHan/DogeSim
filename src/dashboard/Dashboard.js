@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -121,6 +121,24 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [USTD, setUSTD] = useState(10000)
+  const [doge, setDoge] = useState(10000)
+  const [currentPrice, setCurrentPrice] = useState(0)
+  useEffect(() => {
+    async function getLatestPrice() {
+      const url = 'https://api.huobi.pro/market/detail/merged?symbol=dogeusdt'
+      const response = await fetch(url);
+      const responseJSON = await response.json(response);
+      var fetchedPrice = responseJSON.tick.close
+      // console.log(fetchedPrice)
+      if(currentPrice==fetchedPrice){
+        fetchedPrice += 0.000001 
+      }
+      setCurrentPrice(fetchedPrice);
+
+    }
+    getLatestPrice();
+  }, [currentPrice]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -177,13 +195,13 @@ export default function Dashboard() {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <Chart doge={doge} setDoge={setDoge} USTD={USTD} setUSTD={setUSTD} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice}/>
               </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <Deposits doge={doge} setDoge={setDoge} USTD={USTD} setUSTD={setUSTD} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice}/>
               </Paper>
             </Grid>
             {/* Recent Orders */}
