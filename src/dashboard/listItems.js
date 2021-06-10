@@ -10,22 +10,41 @@ import PersonIcon from '@material-ui/icons/Person';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory 
+} from "react-router-dom";
+
+const handleClick = () => {
+  alert("Coming soon!")
+};
+
+
+
+// const routeChange = () =>{ 
+//   const history = useHistory();
+//   let path = `signin`; 
+//   history.push(path);
+// }
 
 export const mainListItems = (
   <div>
-    <ListItem button>
+    <ListItem component={Link} to="/signin">
       <ListItemIcon>
         <PersonIcon />
       </ListItemIcon>
       <ListItemText primary="Login/Signup" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={handleClick}>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Exchange Market" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={handleClick}>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
@@ -37,7 +56,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Customers" />
     </ListItem> */}
-    <ListItem button>
+    <ListItem button onClick={handleClick}>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>

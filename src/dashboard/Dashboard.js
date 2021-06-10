@@ -119,6 +119,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  var chart = document.getElementById('tradingview')
+  chart.style.display = "block"
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [USTD, setUSTD] = useState(10000)
