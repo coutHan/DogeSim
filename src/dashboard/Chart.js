@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { widget } from 'lightweight-charts';
+import Users from "./User"
 // Generate Sales Data
 function createData(time, amount) {
   return { time, amount };
@@ -67,7 +68,7 @@ var tradeview = `
 
 var thisIsMyCopy = '<p>copy copy copy <strong>strong copy</strong></p>';
 
-export default function Chart({doge, setDoge, USTD, setUSTD,currentPrice, setCurrentPrice}) {
+export default function Chart({doge, setDoge, USDT, setUSDT,currentPrice, setCurrentPrice, user}) {
   const [buyDoge, setbuyDoge] = useState(0)
   const [sellDoge, setsellDoge] = useState(0)
   const theme = useTheme();
@@ -109,8 +110,14 @@ export default function Chart({doge, setDoge, USTD, setUSTD,currentPrice, setCur
     const newDoge = parseInt(doge)+parseInt(buyDoge)
     // console.log(newDoge, typeof(doge), typeof(buyDoge))
     setDoge(newDoge)
-    const newUSTD = USTD-buyDoge*currentPrice
-    setUSTD(newUSTD)
+    const newUSDT = USDT-buyDoge*currentPrice
+    setUSDT(newUSDT)
+    Users.user.forEach((item)=>{
+      if (item.name == user){
+        item.DOGE = newDoge
+        item.USDT = newUSDT
+      }
+    })
   }
 
   const handleSell = () =>{
@@ -119,8 +126,14 @@ export default function Chart({doge, setDoge, USTD, setUSTD,currentPrice, setCur
     const newDoge = parseInt(doge)-parseInt(sellDoge)
     // console.log(newDoge, typeof(doge), typeof(buyDoge))
     setDoge(newDoge)
-    const newUSTD = USTD+buyDoge*currentPrice
-    setUSTD(newUSTD)
+    const newUSDT = USDT+buyDoge*currentPrice
+    setUSDT(newUSDT)
+    Users.user.forEach((item)=>{
+      if (item.name == user){
+        item.DOGE = newDoge
+        item.USDT = newUSDT
+      }
+    })
   }
 
   return (
@@ -130,7 +143,7 @@ export default function Chart({doge, setDoge, USTD, setUSTD,currentPrice, setCur
       <form className={classes.root} noValidate autoComplete="off">
       <Grid container spacing={3}>
         <Grid item xs={6}>
-        <TextField id="buy" label={"You have "+USTD+" USDT"} placeholder="Quantity of Dogecoins to buy"  onChange={text => handleBuyInput({text})}/>
+        <TextField id="buy" label={"You have "+USDT+" USDT"} placeholder="Quantity of Dogecoins to buy"  onChange={text => handleBuyInput({text})}/>
         </Grid>
         <Grid item xs={6}>
         <TextField id="sell" label={"You have "+doge+" Dogecoins"} placeholder="Quantity of Dogecoins to sell" onChange={text => handleSellInput({text})}/>

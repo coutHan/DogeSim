@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Deposits({doge, setDoge, USTD, setUSTD, currentPrice, setCurrentPrice}) {
+export default function Deposits({doge, setDoge, USDT, setUSDT, currentPrice, setCurrentPrice}) {
   
   
   
@@ -34,7 +34,7 @@ export default function Deposits({doge, setDoge, USTD, setUSTD, currentPrice, se
     <React.Fragment>
       <Title>Total Estimated Value</Title>
       <Typography component="p" variant="h4">
-        ${doge*currentPrice+USTD}
+        ${doge*currentPrice+USDT}
       </Typography>
       <Typography component="h2" variant="h6" color="secondary" >
         Number of Dogecoins
@@ -46,7 +46,7 @@ export default function Deposits({doge, setDoge, USTD, setUSTD, currentPrice, se
         USDT Avalible
       </Typography>
       <Typography component="p" variant="h5">
-        {USTD}
+        {USDT}
       </Typography>
       {/* <Typography color="textSecondary" className={classes.depositContext}>
         on 15 March, 2019

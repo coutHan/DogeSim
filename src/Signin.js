@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +14,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // const express = require("express");
 // const router = express.Router();
-const Artist = require("./schema/User");
+// const fs = require('fs');
+import Users from "./dashboard/User"
+import { AlternateEmail } from '@material-ui/icons';
+const User = require("./schema/User");
+
+
 
 function Copyright() {
   return (
@@ -62,22 +67,53 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SignInSide(props) {
+export default function SignInSide({email, setEmail,password, setPassword,user, setUser, hasAccount, setHasAccount,doge, setDoge, USDT, setUSDT}) {
   const classes = useStyles();
   var chart = document.getElementById('tradingview')
   chart.style.display = "none"
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    handleLogin,
-    handleSignup,
-    hasAccount,
-    setHasAccount,
-    emailError,
-    passwordError
-} = props;
+  
+  const handleSignup = () =>{
+    console.log(email,password)
+    console.log(Users)
+    var newUser = {
+      "name": email,
+      "password": password,
+      "USDT": 10000,
+      "DOGE": 10000
+    }
+    console.log(newUser)
+    Users.user.forEach((item)=>{
+      if (item.name == email){
+        setDoge(item.DOGE)
+        setUSDT(item.USDT)
+        setUser(item.name)
+        alert("Login success!")
+        window.location.href = '/'
+      }
+    })
+    Users.user.push(newUser)
+    console.log(Users)
+    setDoge(10000)
+    setUSDT(10000)
+    setUser(email)
+    alert("Signup success!")
+    window.location.href = '/'
+  }
+  // useEffect(() => {
+  //   async function getLatestPrice() {
+  //     const url = 'https://api.huobi.pro/market/detail/merged?symbol=dogeusdt'
+  //     const response = await fetch(url);
+  //     const responseJSON = await response.json(response);
+  //     var fetchedPrice = responseJSON.tick.close
+  //     // console.log(fetchedPrice)
+  //     if(currentPrice==fetchedPrice){
+  //       fetchedPrice += 0.000001 
+  //     }
+  //     setCurrentPrice(fetchedPrice);
+
+  //   }
+  //   getLatestPrice();
+  // }, [hasAccount]);
 
   return (
     <Grid container component="main" className={classes.root}>

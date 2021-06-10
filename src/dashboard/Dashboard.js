@@ -23,6 +23,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import Users from "./User"
 
 function Copyright() {
   return (
@@ -118,13 +119,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard({doge, setDoge, USDT, setUSDT, user, setUser}) {
   var chart = document.getElementById('tradingview')
   chart.style.display = "block"
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [USTD, setUSTD] = useState(10000)
-  const [doge, setDoge] = useState(10000)
+  
   const [currentPrice, setCurrentPrice] = useState(0)
   useEffect(() => {
     async function getLatestPrice() {
@@ -141,6 +141,15 @@ export default function Dashboard() {
     }
     getLatestPrice();
   }, [currentPrice]);
+
+  useEffect(() => {
+    Users.user.forEach((item)=>{
+      if (item.name == user){
+        setDoge(item.DOGE)
+        setUSDT(item.USDT)
+      }
+    })
+  }, [user]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -197,13 +206,13 @@ export default function Dashboard() {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <Chart doge={doge} setDoge={setDoge} USTD={USTD} setUSTD={setUSTD} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice}/>
+                <Chart doge={doge} setDoge={setDoge} USDT={USDT} setUSDT={setUSDT} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} user={user}/>
               </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits doge={doge} setDoge={setDoge} USTD={USTD} setUSTD={setUSTD} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice}/>
+                <Deposits doge={doge} setDoge={setDoge} USDT={USDT} setUSDT={setUSDT} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice}/>
               </Paper>
             </Grid>
             {/* Recent Orders */}

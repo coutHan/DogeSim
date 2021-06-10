@@ -16,7 +16,8 @@ export default function App() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
-
+  const [USDT, setUSDT] = useState(10000)
+  const [doge, setDoge] = useState(10000)
   return (    
       <Router>
       <div>
@@ -29,7 +30,7 @@ export default function App() {
         */}
         <Switch>
           <Route exact path="/">
-            <Dashboard/>
+            <Dashboard  doge={doge} setDoge={setDoge} USDT={USDT} setUSDT={setUSDT} user={user} setUser={setUser}/>
           </Route>
           <Route path="/signin">
             <SignInSide 
@@ -37,11 +38,11 @@ export default function App() {
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
-            
+            user={user} 
+            setUser={setUser}
             hasAccount={hasAccount}
             setHasAccount={setHasAccount}
-            emailError={emailError}
-            passwordError={passwordError}
+            doge={doge} setDoge={setDoge} USDT={USDT} setUSDT={setUSDT}
             />
           </Route>
         </Switch>
