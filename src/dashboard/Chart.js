@@ -126,7 +126,7 @@ export default function Chart({doge, setDoge, USDT, setUSDT,currentPrice, setCur
     const newDoge = parseInt(doge)-parseInt(sellDoge)
     // console.log(newDoge, typeof(doge), typeof(buyDoge))
     setDoge(newDoge)
-    const newUSDT = USDT+buyDoge*currentPrice
+    const newUSDT = USDT+sellDoge*currentPrice
     setUSDT(newUSDT)
     Users.user.forEach((item)=>{
       if (item.name == user){
